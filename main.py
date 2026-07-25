@@ -90,6 +90,10 @@ def send_poll(question, options):
 
 
 def get_updates(offset):
+    # A webhook set on the bot blocks getUpdates with a 409 Conflict.
+    # Clearing it here is harmless if no webhook was ever set.
+    requests.get(f"{TELEGRAM_API}/deleteWebhook", timeout=15)
+
     url = f"{TELEGRAM_API}/getUpdates"
     params = {"timeout": 0}
     if offset is not None:
