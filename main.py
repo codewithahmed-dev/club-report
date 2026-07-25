@@ -1,19 +1,19 @@
 """
-Hourly Champions League / Football Telegram Poster
----------------------------------------------------
+Hourly Champions League / Football Telegram Poster (Gemini-powered, free tier)
+--------------------------------------------------------------------------------
 Runs every hour (scheduled by GitHub Actions cron).
 - Checks replies to the PREVIOUS trivia/quiz post and announces if anyone
   got it right (or reveals the answer if nobody did).
 - 09:00 UTC on a match day -> posts fixtures + a prediction poll (once).
 - During a match's live window -> posts a live score update.
-- Otherwise -> asks Claude to generate a fresh trivia question, fun fact,
-  or emoji quiz, and remembers the correct answer for next run.
+- Otherwise -> asks Gemini to generate a fresh trivia question, fun fact,
+  or emoji quiz (free tier, no cost) and remembers the correct answer.
 
 Required environment variables (set as GitHub repo secrets):
   TELEGRAM_BOT_TOKEN     - token from @BotFather
   TELEGRAM_CHAT_ID       - your group's chat id (e.g. -1001234567890)
   FOOTBALL_DATA_API_KEY  - free key from https://www.football-data.org/client/register
-  ANTHROPIC_API_KEY      - key from https://console.claude.com (paid, usage here is tiny)
+  GEMINI_API_KEY         - free key from https://aistudio.google.com/apikey
 """
 
 import os
@@ -25,15 +25,16 @@ import requests
 BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 FOOTBALL_API_KEY = os.environ.get("FOOTBALL_DATA_API_KEY", "")
-ANTHROPIC_API_KEY = os.environ["ANTHROPIC_API_KEY"]
+GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 CL_COMPETITION_CODE = "CL"  # UEFA Champions League on football-data.org
-ANTHROPIC_MODEL = "claude-haiku-4-5-20251001"  # fast + cheap, plenty for short posts
+GEMINI_MODEL = "gemini-2.5-flash-lite"  # most generous free-tier model
+GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 
 BASE_DIR = os.path.dirname(__file__)
 STATE_PATH = os.path.join(BASE_DIR, "state.json")
-POSTED_TEXTS_LIMIT = 40  # how many past questions/facts to remember, to avoid near-duplicates
+POSTED_TEXTS_LIMIT = 40  # remember recent questions/facts to avoid near-duplicates
 
 
 def load_state():
@@ -164,7 +165,7 @@ def post_live_scores(live_matches):
 
 
 def generate_ai_content(content_type, posted_texts):
-    """Ask Claude to write a fresh trivia question, fun fact, or emoji quiz (with answer)."""
+    """Ask Gemini to write a fresh trivia question, fun fact, or emoji quiz (with answer)."""
     avoid_list = "\n".join(f"- {t}" for t in posted_texts[-25:]) or "(none yet)"
 
     prompts = {
@@ -193,22 +194,17 @@ def generate_ai_content(content_type, posted_texts):
     }
 
     resp = requests.post(
-        "https://api.anthropic.com/v1/messages",
+        GEMINI_URL,
         headers={
-            "x-api-key": ANTHROPIC_API_KEY,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json",
+            "x-goog-api-key": GEMINI_API_KEY,
+            "Content-Type": "application/json",
         },
-        json={
-            "model": ANTHROPIC_MODEL,
-            "max_tokens": 250,
-            "messages": [{"role": "user", "content": prompts[content_type]}],
-        },
+        json={"contents": [{"parts": [{"text": prompts[content_type]}]}]},
         timeout=30,
     )
     resp.raise_for_status()
     data = resp.json()
-    raw_text = "".join(block.get("text", "") for block in data.get("content", []))
+    raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
     cleaned = raw_text.replace("```json", "").replace("```", "").strip()
     return json.loads(cleaned)
 
