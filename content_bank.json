@@ -1,0 +1,44 @@
+{
+  "trivia": [
+    {"q": "Which club has won the most Champions League/European Cup titles?", "a": "Real Madrid (15 titles)"},
+    {"q": "Who is the all-time top scorer in Champions League history?", "a": "Cristiano Ronaldo"},
+    {"q": "Which English club won the very first Champions League in the 1992-93 format?", "a": "Marseille (French club) won the first CL; first English winner under new format was Man United in 1999"},
+    {"q": "Which player has the most Champions League assists of all time?", "a": "Lionel Messi"},
+    {"q": "In what year did the European Cup rebrand to the UEFA Champions League?", "a": "1992"},
+    {"q": "Which manager has won the most Champions League titles?", "a": "Carlo Ancelotti (5 titles)"},
+    {"q": "Which club famously came back from 3-0 down at half-time to win the 2005 final?", "a": "Liverpool (vs AC Milan, Istanbul)"},
+    {"q": "Who scored the fastest hat-trick in Champions League history?", "a": "Bafétimbi Gomis (in under 3 minutes)"},
+    {"q": "Which country has produced the most Champions League winning clubs?", "a": "Spain"},
+    {"q": "Who was the youngest ever Champions League goalscorer?", "a": "Youssoufa Moukoko"},
+    {"q": "Which club lost 3 consecutive Champions League finals from 2015-2018 era (multiple finals)?", "a": "Juventus reached finals in 2015 and 2017"},
+    {"q": "What is the away goals rule's status in the Champions League today?", "a": "Abolished since the 2021-22 season"},
+    {"q": "Which stadium has hosted the most Champions League finals?", "a": "Wembley Stadium (London)"},
+    {"q": "Who is the youngest player to captain a team in a Champions League final?", "a": "Kylian Mbappé wasn't captain — trick question, verify per season"},
+    {"q": "Which club has reached the most Champions League finals without ever winning?", "a": "Valencia and Leverkusen are among clubs with multiple final losses"}
+  ],
+  "fun_facts": [
+    "⚽ The Champions League anthem was composed by Tony Britten, based on Handel's 'Zadok the Priest'.",
+    "⚽ The official Champions League trophy is often called 'Ol' Big Ears' due to its large handles.",
+    "⚽ No club has successfully defended the Champions League title since Real Madrid's three-peat (2016-2018).",
+    "⚽ The competition's group stage format was introduced in the 1991-92 season.",
+    "⚽ A new club format (Swiss Model) was introduced from the 2024-25 season, replacing traditional groups.",
+    "⚽ The trophy is not given to the winning club permanently — clubs that win it 5 times or 3 times in a row get a special replica.",
+    "⚽ Real Madrid have never been eliminated in a Champions League round of 16 tie against a team they trailed after the first leg (historically dominant comebacks).",
+    "⚽ The final is always played at a neutral venue, decided years in advance.",
+    "⚽ Bayern Munich, Ajax, and Real Madrid are among clubs to have completed a continental treble."
+  ],
+  "emoji_quiz": [
+    {"clue": "🐐🇦🇷🔴🔵 Who am I?", "answer": "Lionel Messi"},
+    {"clue": "🇵🇹🚀👑 Who am I?", "answer": "Cristiano Ronaldo"},
+    {"clue": "🇳🇴🦁⚡ Who am I?", "answer": "Erling Haaland"},
+    {"clue": "🇫🇷⚡👑 Who am I?", "answer": "Kylian Mbappé"},
+    {"clue": "🧤🇧🇪🦸 Who am I?", "answer": "Thibaut Courtois"},
+    {"clue": "🇪🇸🎩🪄 Who am I?", "answer": "Pedri"}
+  ],
+  "polls": [
+    "🔮 Who wins today's big match?",
+    "🗳️ Predict tonight's scoreline!",
+    "⚔️ Which team has the better squad this season?",
+    "🎯 Man of the Match prediction — who's your pick?"
+  ]
+}
